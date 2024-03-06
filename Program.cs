@@ -1,9 +1,6 @@
-using identity_base_api.Infrastructure.Database;
 using identity_base_api.Infrastructure.System.Extensions;
 using identity_base_api.Infrastructure.System.Middlewares;
 using identity_base_api.Infrastructure.System.Models;
-using identity_base_api.Models;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +14,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddRepositoriesExtension(settings.ConnectionString);
-
-builder.Services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<Context>()
-                .AddDefaultTokenProviders();
 
 var app = builder.Build();
 

@@ -1,45 +1,19 @@
-using identity_base_api.Infrastructure.Database;
 using identity_base_api.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace identity_base_api.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly IRepository<User> _repo;
+    private UserManager<User> _userManager;
     
-    public UserRepository(IRepository<User> repo) 
+    public UserRepository(UserManager<User> userManager) 
     {
-        _repo = repo;
+        _userManager = userManager;
     }
 
-    public async Task AddAsync(User obj)
+    public async Task<IdentityResult> AddUserAsync(User obj, string password)
     {
-        await _repo.Create(obj);
-    }
-
-    public async Task<IEnumerable<User>> GetAllAsync(int skip, int take)
-    {
-        var users = await _repo.GetAll();
-
-        //if(theaterName == null)
-            
-        return users.Skip(skip).Take(take);
-
-        // return movies.Where(m => m.Sessions != null && m.Sessions.Any(s => s.MovieTheater != null && s.MovieTheater.Name == theaterName));
-    }
-
-    public async Task<User?> GetByIdAsync(int id)
-    {
-        return await _repo.GetById(id);
-    }
-
-    public async Task RemoveAsync(int id)
-    {
-        await _repo.Delete(id);
-    }
-
-    public async Task UpdateAsync(User obj, int id)
-    {
-        await _repo.Update(id, obj);
+        return await _userManager.CreateAsync(obj, password);
     }
 }

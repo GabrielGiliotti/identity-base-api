@@ -20,40 +20,11 @@ public class UserController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddUser(CreateUserDto obj) 
     {
-        await _userService.AddUserAsync(obj);
+        var result = await _userService.AddUserAsync(obj);
 
-        return StatusCode(201, obj); 
-    }
+        if(result.Succeeded)
+            return StatusCode(201, "User registered successfully");
 
-    [HttpGet]
-    public async Task<IActionResult> GetUsersPaged([FromQuery] int skip = 0, [FromQuery] int take = 100) 
-    {
-        var users = await _userService.GetAllUsersAsync(skip, take);
-        
-        return Ok(users);
-    }
-
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetUserById(int id) 
-    {
-        var user = await _userService.GetUserByIdAsync(id);
-        
-        return Ok(user);
-    }
-
-    [HttpPatch("{id}")]
-    public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserDto obj) 
-    {
-        await _userService.UpdateUserAsync(obj, id);
-
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteUser(int id) 
-    {
-        await _userService.DeleteUserAsync(id);
-
-        return NoContent();
+        return StatusCode(500, result.Errors); 
     }
 }
