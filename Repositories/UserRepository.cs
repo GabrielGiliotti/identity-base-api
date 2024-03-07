@@ -16,4 +16,9 @@ public class UserRepository : IUserRepository
     {
         return await _userManager.CreateAsync(obj, password);
     }
+
+    public async Task<User?> GetUserByEmailAsync(string email)
+    {
+        return await _userManager.FindByEmailAsync(email);
+    }
 }

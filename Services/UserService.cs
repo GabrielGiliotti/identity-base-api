@@ -26,4 +26,14 @@ public class UserService : IUserService
         else
             throw new Exception("Error when adding User");
     }
+
+    public async Task<GetUserDto?> GetUserByEmailAsync(string email)
+    {
+         var user = await _repository.GetUserByEmailAsync(email);
+
+        if(user is not null)
+            return _mapper.Map<GetUserDto>(user);
+        else
+            throw new Exception("Error when adding User");
+    }
 }

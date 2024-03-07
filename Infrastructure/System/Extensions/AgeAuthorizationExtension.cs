@@ -3,11 +3,11 @@ using identity_base_api.Infrastructure.System.Models;
 
 namespace identity_base_api.Infrastructure.System.Extensions;
 
-public class AgeAuthorizationExtension : AuthorizationHandler<AgeRequirement>
+public class AgeAuthorizationExtension : AuthorizationHandler<AdminRequirement>
 {
-    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AgeRequirement requirement)
+    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AdminRequirement requirement)
     {
-        var birthDateClaim = context.User.FindFirst(claim => claim.Type == "BirthDate");
+        var birthDateClaim = context.User.FindFirst(claim => claim.Type == "IsAdmin");
 
         if(birthDateClaim is null)
             return Task.CompletedTask;
@@ -19,7 +19,7 @@ public class AgeAuthorizationExtension : AuthorizationHandler<AgeRequirement>
         if(birthDate > DateTime.Today.AddYears(-age)) 
             age--;
 
-        if(age >= requirement.Age)
+        if(requirement.IsAdmin)
             context.Succeed(requirement);
 
         return Task.CompletedTask;

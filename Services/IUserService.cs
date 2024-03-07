@@ -6,4 +6,6 @@ namespace identity_base_api.Services;
 public interface IUserService
 {
     Task<IdentityResult> AddUserAsync(CreateUserDto obj);
+
+    Task<GetUserDto?> GetUserByEmailAsync(string email);
 }

@@ -32,8 +32,8 @@ builder.Services
     });
 
 builder.Services.AddAuthorization(opts => {
-    opts.AddPolicy("MinAge", policy =>
-        policy.Requirements.Add(new AgeRequirement(18)));
+    opts.AddPolicy("Admin", policy =>
+        policy.Requirements.Add(new AdminRequirement(true)));
 });
 
 var app = builder.Build();
