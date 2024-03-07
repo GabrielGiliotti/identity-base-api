@@ -16,4 +16,9 @@ public class AuthRepository : IAuthRepository
     {
         return await _signInManager.PasswordSignInAsync(obj.Username, obj.Password, false, false);
     }
+
+    public User? GetAuthenticatedUser(Login obj)
+    {
+        return _signInManager.UserManager.Users.FirstOrDefault(user => user.NormalizedUserName == obj.Username.ToUpper());
+    }
 }

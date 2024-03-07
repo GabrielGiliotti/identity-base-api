@@ -21,7 +21,7 @@ public class UserService : IUserService
     {
         var user = _mapper.Map<User>(dto);
 
-        if(user != null)
+        if(user is not null)
             return await _repository.AddUserAsync(user, dto.Password);
         else
             throw new Exception("Error when adding User");

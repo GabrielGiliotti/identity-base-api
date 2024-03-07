@@ -1,6 +1,7 @@
 using identity_base_api.Infrastructure.System.Extensions;
 using identity_base_api.Infrastructure.System.Middlewares;
 using identity_base_api.Infrastructure.System.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,26 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddRepositoriesExtension(settings.ConnectionString);
 
+builder.Services
+    .AddAuthentication(opts => {
+        opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(opts => {
+        opts.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters 
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = ServiceExtension.key,
+            ValidateAudience = false,
+            ValidateIssuer = false,
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorization(opts => {
+    opts.AddPolicy("MinAge", policy =>
+        policy.Requirements.Add(new AgeRequirement(18)));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +48,8 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -22,11 +22,6 @@ public class AuthController : ControllerBase
     {
         var result = await _authService.LoginAsync(dto);
 
-        var textResult = $"Login action for user {dto.Username}: {result.Succeeded}";
-
-        if(result.Succeeded)
-            return StatusCode(200, textResult);
-
-        return StatusCode(500, textResult); 
+        return StatusCode(200, result);
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using identity_base_api.DTOs;
 using identity_base_api.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace identity_base_api.Controllers;
 
@@ -18,6 +19,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize("MinAge")]
     public async Task<IActionResult> AddUser(CreateUserDto obj) 
     {
         var result = await _userService.AddUserAsync(obj);

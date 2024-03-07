@@ -6,4 +6,5 @@ namespace identity_base_api.Repositories;
 public interface IAuthRepository
 {
     Task<SignInResult> LoginAsync(Login obj);
+    User? GetAuthenticatedUser(Login obj);
 }
