@@ -4,10 +4,10 @@ using identity_base_api.Models;
 
 namespace identity_base_api.Infrastructure.System.Profiles;
 
-public class UserProfile : Profile
+public class AuthProfile : Profile
 {
-    public UserProfile() 
+    public AuthProfile() 
     {
-        CreateMap<CreateUserDto, User>();
+        CreateMap<LoginDto, Login>();
     }
 }

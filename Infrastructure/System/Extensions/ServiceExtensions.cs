@@ -21,9 +21,11 @@ public static class ServiceExtensions
                 .AddDefaultTokenProviders();
                 
         // Repositories
+        services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
 
         // Services
+        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
     }
 }
