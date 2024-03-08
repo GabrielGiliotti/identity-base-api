@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using identity_base_api.DTOs;
 using identity_base_api.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace identity_base_api.Controllers;
 
@@ -18,6 +19,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize("Admin")]
     public async Task<IActionResult> AddUser(CreateUserDto obj) 
     {
         var result = await _userService.AddUserAsync(obj);
@@ -52,6 +54,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPatch("{id}")]
+    [Authorize("Admin")]
     public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto obj, string id) 
     {
         var result = await _userService.UpdateUserAsync(obj, id);
@@ -63,6 +66,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize("Admin")]
     public async Task<IActionResult> DeleteUser(string id) 
     {
         var result = await _userService.DeleteUserAsync(id);

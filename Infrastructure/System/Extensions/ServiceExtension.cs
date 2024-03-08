@@ -25,7 +25,7 @@ public static class ServiceExtension
                 .AddEntityFrameworkStores<Context>()
                 .AddDefaultTokenProviders();
 
-        services.AddSingleton<IAuthorizationHandler, AgeAuthorizationExtension>();
+        services.AddSingleton<IAuthorizationHandler, AdminAuthorizationExtension>();
 
         // Repositories
         services.AddScoped<IAuthRepository, AuthRepository>();

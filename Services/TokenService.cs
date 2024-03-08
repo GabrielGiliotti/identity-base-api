@@ -24,7 +24,8 @@ public class TokenService : ITokenService
             new Claim("Username", !string.IsNullOrEmpty(obj.UserName) ? obj.UserName : "empty"),
             new Claim("Id", obj.Id),
             new Claim("BirthDate", obj.BirthDate.ToString()),
-            new Claim("Email", !string.IsNullOrEmpty(obj.Email) ? obj.Email : "empty")
+            new Claim("Email", !string.IsNullOrEmpty(obj.Email) ? obj.Email : "empty"),
+            new Claim("IsAdmin", obj.IsAdmin.ToString().ToLower())
         };
 
         var signingCredentials = new SigningCredentials(ServiceExtension.key, SecurityAlgorithms.HmacSha256Signature);

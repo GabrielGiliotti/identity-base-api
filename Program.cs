@@ -33,7 +33,7 @@ builder.Services
 
 builder.Services.AddAuthorization(opts => {
     opts.AddPolicy("Admin", policy =>
-        policy.Requirements.Add(new AdminRequirement(true)));
+        policy.Requirements.Add(new AdminRequirement()));
 });
 
 var app = builder.Build();

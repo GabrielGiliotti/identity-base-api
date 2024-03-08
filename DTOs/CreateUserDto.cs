@@ -20,4 +20,7 @@ public class CreateUserDto
     [Required]
     [Compare("Password")]
     public string RePassword { get; set; } = null!;
+
+    [Required]
+    public bool IsAdmin { get; set; }
 }
