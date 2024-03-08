@@ -29,8 +29,8 @@ public class UserController : ControllerBase
     }
 
 
-    [HttpGet]
-    public async Task<IActionResult> GetUser(string email) 
+    [HttpGet("email/{email}")]
+    public async Task<IActionResult> GetUserByEmail(string email) 
     {
         var result = await _userService.GetUserByEmailAsync(email);
 
@@ -40,25 +40,36 @@ public class UserController : ControllerBase
         return StatusCode(500, "Error getting User"); 
     }
 
-    // [HttpPatch]
-    // public async Task<IActionResult> UpdateUser(UpdateUserDto obj) 
-    // {
-    //     var result = await _userService.AddUserAsync(obj);
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetUserById(string id) 
+    {
+        var result = await _userService.GetUserByIdAsync(id);
 
-    //     if(result.Succeeded)
-    //         return StatusCode(201, "User registered successfully");
+        if(result != null)
+            return StatusCode(200, result);
 
-    //     return StatusCode(500, result.Errors); 
-    // }
+        return StatusCode(500, "Error getting User"); 
+    }
 
-    // [HttpDelete]
-    // public async Task<IActionResult> DeleteUser(int id) 
-    // {
-    //     var result = await _userService.AddUserAsync(id);
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto obj, string id) 
+    {
+        var result = await _userService.UpdateUserAsync(obj, id);
 
-    //     if(result.Succeeded)
-    //         return StatusCode(201, "User registered successfully");
+        if(result.Succeeded)
+            return StatusCode(200, "User updated successfully");
 
-    //     return StatusCode(500, result.Errors); 
-    // }
+        return StatusCode(500, result.Errors); 
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteUser(string id) 
+    {
+        var result = await _userService.DeleteUserAsync(id);
+
+        if(result.Succeeded)
+            return StatusCode(200, "User deleted successfully");
+
+        return StatusCode(500, result.Errors); 
+    }
 }

@@ -21,4 +21,19 @@ public class UserRepository : IUserRepository
     {
         return await _userManager.FindByEmailAsync(email);
     }
+
+    public async Task<User?> GetUserByIdAsync(string id)
+    {
+        return await _userManager.FindByIdAsync(id);
+    }
+
+    public async Task<IdentityResult> UpdateUserAsync(User user)
+    {
+        return await _userManager.UpdateAsync(user);
+    }
+
+    public async Task<IdentityResult> DeleteUserAsync(User user)
+    {
+        return await _userManager.DeleteAsync(user);
+    }
 }
